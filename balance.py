@@ -16,7 +16,6 @@ class Balance:
 
     def fetch_balance(self):
         data = self.api.make_request("GET", "/v1/private/user-balance")
-        print(data)
 
         if data and data["code"] == 0:
             self.user_balance = data["result"]["accounts"]
