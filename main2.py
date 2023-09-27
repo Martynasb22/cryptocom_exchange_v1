@@ -8,7 +8,6 @@ import time
 from tickers import Tickers
 from candlestick import Candles
 from colorama import Fore, Style
-import matplotlib.pyplot as plt
 
 load_dotenv()
 api_key = os.getenv("API_KEY")
@@ -71,7 +70,14 @@ while True:
 
         candlestick_data = candlestick.get_candles_by_symbol(base_url, symbol, time_interval="M5")
 
-        if candlestick_data is None:
+        if candlestick_data:
+            print(Style.DIM + Fore.WHITE + f"Candlestick Data:".ljust(25) + Style.RESET_ALL)
+            candlestick.print_candlestick_data(symbol_name=symbol, signal='SHORT')
+
+            # Jei gaunamas LONG signalas
+            candlestick.print_candlestick_data(symbol_name=symbol, signal='LONG')
+            print(candlestick.print_candlestick_data(symbol_name=symbol))
+
             print(f"Failed to fetch candlestick data for {symbol}")  # Error message
             continue
 
@@ -88,4 +94,4 @@ while True:
         elif close_price < lower_band:
             print(f"Opened LONG position on {symbol} at price {close_price}")
 
-    time.sleep(0.5)  # sleep for a minute before checking again
+    time.sleep(0.5)
