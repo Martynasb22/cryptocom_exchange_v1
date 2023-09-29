@@ -66,3 +66,4 @@ class Tickers:
             25) + Style.RESET_ALL)
         print(Fore.BLUE + "Timestamp:".ljust(25) + Style.RESET_ALL + Fore.RED + str(self.timestamp).rjust(
             25) + Style.RESET_ALL)
+

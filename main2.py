@@ -30,18 +30,18 @@ tickers = Tickers()
 ticker_data = tickers.get_ticker_by_symbol(base_url, symbol)
 
 # Atspausdiname gautus duomenis, jei jie yra
-# if ticker_data:
-#     print(Style.DIM + Fore.WHITE + f"Ticker Data:".ljust(25) + Style.RESET_ALL)
-#     tickers.print_ticker_data()
-#
-# candlestick = Candles()
-# candlestick_data = candlestick.get_candles_by_symbol(base_url, symbol, time_interval="M5")
-#
-# if candlestick_data:
-#     print(Style.DIM + Fore.WHITE + f"Candlestick Data:".ljust(25) + Style.RESET_ALL)
-#     print_candlestick_data = candlestick.print_candlestick_data()
-#
-#
+if ticker_data:
+    print(Style.DIM + Fore.WHITE + f"Ticker Data:".ljust(25) + Style.RESET_ALL)
+    tickers.print_ticker_data()
+
+candlestick = Candles()
+candlestick_data = candlestick.get_candles_by_symbol(base_url, symbol, time_interval="M5")
+
+if candlestick_data:
+    print(Style.DIM + Fore.WHITE + f"Candlestick Data:".ljust(25) + Style.RESET_ALL)
+    print_candlestick_data = candlestick.print_candlestick_data(symbol_name=symbol)
+
+
 with open("symbols.json", "r") as f:
     symbols = json.load(f)
 
@@ -65,20 +65,14 @@ while True:
 
         candlestick = Candles()
 
-        # Debugging line
         print(f"Fetching candlestick data for instrument_name: {symbol}")
 
         candlestick_data = candlestick.get_candles_by_symbol(base_url, symbol, time_interval="M5")
 
         if candlestick_data:
-            print(Style.DIM + Fore.WHITE + f"Candlestick Data:".ljust(25) + Style.RESET_ALL)
-            candlestick.print_candlestick_data(symbol_name=symbol, signal='SHORT')
-
-            # Jei gaunamas LONG signalas
-            candlestick.print_candlestick_data(symbol_name=symbol, signal='LONG')
-            print(candlestick.print_candlestick_data(symbol_name=symbol))
-
-            print(f"Failed to fetch candlestick data for {symbol}")  # Error message
+            candlestick.print_candlestick_data(symbol_name=symbol)
+        else:
+            print(f"Failed to fetch candlestick data for {symbol}")
             continue
 
         sma, upper_band, lower_band = candlestick.calculate_bollinger_bands(period=20, deviation=2)
@@ -88,10 +82,19 @@ while True:
 
         close_price = float(candlestick_data[-1].get("c", 0))
 
+        signal = None
         if close_price > upper_band:
             print(f"Opened SHORT position on {symbol} at price {close_price}")
-
+            signal = 'SHORT'
         elif close_price < lower_band:
             print(f"Opened LONG position on {symbol} at price {close_price}")
+            signal = 'LONG'
+        else:
+            print(f"HOLD position on {symbol}")
+            signal = 'HOLD'
 
-    time.sleep(0.5)
+        if signal:
+            print(Style.DIM + Fore.WHITE + f"Candlestick Data:".ljust(25) + Style.RESET_ALL)
+            candlestick.print_candlestick_data(symbol_name=symbol)
+
+        time.sleep(0.5)

@@ -2166,6 +2166,25 @@
         "margin_sell_enabled": false
     },
     {
+        "symbol": "TRBUSD-PERP",
+        "inst_type": "PERPETUAL_SWAP",
+        "display_name": "TRBUSD Perpetual",
+        "base_ccy": "TRB",
+        "quote_ccy": "USD",
+        "quote_decimals": 3,
+        "quantity_decimals": 1,
+        "price_tick_size": "0.001",
+        "qty_tick_size": "0.1",
+        "max_leverage": "50",
+        "tradable": true,
+        "expiry_timestamp_ms": 0,
+        "beta_product": false,
+        "underlying_symbol": "TRBUSD-INDEX",
+        "contract_size": "1",
+        "margin_buy_enabled": false,
+        "margin_sell_enabled": false
+    },
+    {
         "symbol": "TRUUSD-PERP",
         "inst_type": "PERPETUAL_SWAP",
         "display_name": "TRUUSD Perpetual",
