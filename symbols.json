@@ -1083,6 +1083,25 @@
         "margin_sell_enabled": false
     },
     {
+        "symbol": "GLMRUSD-PERP",
+        "inst_type": "PERPETUAL_SWAP",
+        "display_name": "GLMRUSD Perpetual",
+        "base_ccy": "GLMR",
+        "quote_ccy": "USD",
+        "quote_decimals": 5,
+        "quantity_decimals": 0,
+        "price_tick_size": "0.00001",
+        "qty_tick_size": "10",
+        "max_leverage": "50",
+        "tradable": true,
+        "expiry_timestamp_ms": 0,
+        "beta_product": false,
+        "underlying_symbol": "GLMRUSD-INDEX",
+        "contract_size": "1",
+        "margin_buy_enabled": false,
+        "margin_sell_enabled": false
+    },
+    {
         "symbol": "GMTUSD-PERP",
         "inst_type": "PERPETUAL_SWAP",
         "display_name": "GMTUSD Perpetual",

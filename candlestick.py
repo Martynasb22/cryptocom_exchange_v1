@@ -10,7 +10,7 @@ import requests
 import json
 from colorama import Fore, Style
 
-fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(12, 8))
+fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(8, 4))
 
 
 class Candles:
@@ -27,6 +27,9 @@ class Candles:
         response = requests.get(url)
         if response.status_code == 200:
             data = response.json()
+            if data["code"] == 0:
+                self.candles = data["result"]["data"]
+                return self.candles
             self.candles = data.get("result", {}).get("data", [])
             return self.candles
 
@@ -42,7 +45,6 @@ class Candles:
             [float(candle.get('c', 0)) for candle in self.candles]
         )
         rsi_list = []
-        print(close_prices)
         for i in range(periods, len(close_prices)):
             sub_prices = close_prices[i - periods:i]
             delta = sub_prices[1:] - sub_prices[:-1]
